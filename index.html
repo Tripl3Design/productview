@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/gh/Tripl3Design/tripletise@latest/tripletiseModal.css" rel="stylesheet">
+
+  <!-- Furnitise Search -->
+  <!-- multirange slider -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js'></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.css">
+
+  <title>TripleTise inspiration</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container mt-4 mb-1">
+    <input type="radio" class="btn-check" name="type" value="closet" id="closet" autocomplete="off" checked>
+    <label class="btn btn-light btn-lg rounded-0 fw-bold mb-2 me-2" for="closet">kasten</label>
+
+    <input type="radio" class="btn-check" name="type" value="sofa" id="sofa" autocomplete="off">
+    <label class="btn btn-light btn-lg rounded-0 fw-bold mb-2 me-2" for="sofa">banken & fauteuils</label>
+
+    <input type="radio" class="btn-check" name="type" value="chair" id="chair" autocomplete="off">
+    <label class="btn btn-light btn-lg rounded-0 fw-bold mb-2 me-2" for="chair">eetkamerstoelen</label>
+
+    <input type="radio" class="btn-check" name="type" value="table" id="table" autocomplete="off">
+    <label class="btn btn-light btn-lg rounded-0 fw-bold mb-2 me-2" for="table">tafels</label>
+
+    <div class="row">
+      <form id="requestFurnitiseSearch" class="d-flex">
+        <style>
+          .multipleRangeSlider {
+            padding: 0 11px;
+            border-radius: 0px;
+            border: none;
+            height: 6px;
+            background: #ccc;
+          }
+
+          .multipleRangeSlider .noUi-connect {
+            border: 0px;
+            background: #000;
+          }
+
+          .multipleRangeSlider .noUi-handle {
+            box-shadow: none;
+            border: none;
+            background: #000;
+            height: 22px;
+            width: 22px;
+            top: -8px;
+            right: -11px;
+            /* half the width */
+            border-radius: 22px;
+          }
+
+          .multipleRangeSlider .noUi-handle-lower {
+            right: 0;
+            /* prevent overlap of handles */
+          }
+
+          .multipleRangeSlider .noUi-handle-upper {
+            right: -22px;
+            /* prevent overlap of handles */
+          }
+
+          .multipleRangeSlider .noUi-handle::before,
+          .multipleRangeSlider .noUi-handle::after {
+            display: none;
+          }
+
+          .multipleRangeSlider .noUi-tooltip {
+            background: transparent;
+            border: none;
+            font-weight: bold;
+          }
+        </style>
+
+        <!-- width -->
+        <div id="widthButton" class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            breedte
+          </button>
+          <div style="width: 320px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+            <div class="row m-0 p-0">
+              <div class="col-5 m-0 p-0 mb-4">
+                <div class="input-group">
+                  <input style="background-color: #fff; border-right: 0;" type="text"
+                    class="form-control rounded-0 border-dark" aria-label="minimal width" id="widthInputMin"
+                    name="widthInputMin">
+                  <span style="background-color: #fff; border-left: 0;"
+                    class="input-group-text rounded-0 border-dark">cm</span>
+                </div>
+              </div>
+              <div class="col-2 text-center m-0 p-0">
+                &mdash;
+              </div>
+              <div class="col-5 m-0 p-0">
+                <div class="input-group">
+                  <input style="background-color: #fff; border-right: 0;" type="text"
+                    class="form-control rounded-0 border-dark" aria-label="maximal width" id="widthInputMax"
+                    name="widthInputMax">
+                  <span style="background-color: #fff; border-left: 0;"
+                    class="input-group-text rounded-0 border-dark">cm</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row m-0 p-0 px-2 py-2">
+              <div class="multipleRangeSlider" id="width"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- height -->
+        <div id="heightButton" class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            hoogte
+          </button>
+          <div style="width: 320px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+
+            <div class="row m-0 p-0">
+              <div class="col-5 m-0 p-0 mb-4">
+                <div class="input-group">
+                  <input style="background-color: #fff; border-right: 0;" type="text"
+                    class="form-control rounded-0 border-dark" aria-label="minimal height" id="heightInputMin"
+                    name="heightInputMin">
+                  <span style="background-color: #fff; border-left: 0;"
+                    class="input-group-text rounded-0 border-dark">cm</span>
+                </div>
+              </div>
+              <div class="col-2 text-center m-0 p-0">
+                &mdash;
+              </div>
+              <div class="col-5 m-0 p-0">
+                <div class="input-group">
+                  <input style="background-color: #fff; border-right: 0;" type="text"
+                    class="form-control rounded-0 border-dark" aria-label="maximal height" id="heightInputMax"
+                    name="heightInputMax">
+                  <span style="background-color: #fff; border-left: 0;"
+                    class="input-group-text rounded-0 border-dark">cm</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row m-0 p-0 px-2 py-2">
+              <div class="multipleRangeSlider" id="height"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- numberOfSeats -->
+        <div id="numberOfSeatsButton" class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            aantal zitplaatsen
+          </button>
+          <div style="width: 320px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+
+            <div class="row m-0 p-0">
+              <div class="col-5 m-0 p-0 mb-4">
+                <div class="input-group">
+                  <input style="background-color: #fff;" type="text" class="form-control rounded-0 border-dark"
+                    aria-label="minimal numberOfSeats" id="numberOfSeatsInputMin" name="numberOfSeatsInputMin">
+                </div>
+              </div>
+              <div class="col-2 text-center m-0 p-0">
+                &mdash;
+              </div>
+              <div class="col-5 m-0 p-0">
+                <div class="input-group">
+                  <input style="background-color: #fff;" type="text" class="form-control rounded-0 border-dark"
+                    aria-label="maximal numberOfSeats" id="numberOfSeatsInputMax" name="numberOfSeatsInputMax">
+                </div>
+              </div>
+            </div>
+
+            <div class="row m-0 p-0 px-2 py-2">
+              <div class="multipleRangeSlider" id="numberOfSeats"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- colorGroup -->
+        <div id="colorGroupButton" class="dropdown m-0 p-0" data-bs-theme="dark">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            kleur
+          </button>
+          <div style="width: 350px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+            <div class="row row-col-5">
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #FAFAFA;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="white" id="white" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #DCD2B6;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="sand" id="sand" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #8B725E;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="brown" id="brown" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #AAAAAA;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="gray" id="gray" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #1C2225;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="black" id="black" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #5924DB;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="blue" id="blue" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #EE3333;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="red" id="red" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #EE8D33;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="orange" id="orange" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #EEBF33;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="yellow" id="yellow" autocomplete="off" checked>
+              </div>
+              <div class="col form-check">
+                <input style="width: 50px; height: 50px; background-color: #4B9F55;"
+                  class="form-check-input rounded-pill border border-dark border-1" type="checkbox" name="color"
+                  value="green" id="green" autocomplete="off" checked>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- type -->
+        <div id="typeButton" class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            type
+          </button>
+          <div style="width: 320px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+          </div>
+        </div>
+
+        <!-- brand -->
+        <div id="brandButton" class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            merk
+          </button>
+          <div style="width: 320px;" class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0 p-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="brand" value="all" id="all" checked>
+              <label class="form-check-label" for="all">alles</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="brand" value="pastoe" id="pastoe">
+              <label class="form-check-label" for="pastoe">pastoe</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="brand" value="merk_2" id="merk_2" disabled>
+              <label class="form-check-label" for="merk_2">merk 2</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="brand" value="merk_3" id="merk_3" disabled>
+              <label class="form-check-label" for="merk_3">merk 3</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="brand" value="merk_4" id="merk_4" disabled>
+              <label class="form-check-label" for="merk_4">merk 4</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- sort -->
+        <div class="dropdown m-0 p-0">
+          <button class="btn btn-outline-dark btn-lg rounded-0 border border-dark border-1 dropdown-toggle mb-2 me-2"
+            type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            sorteren
+          </button>
+          <ul class="dropdown-menu rounded-0 shadow border border-dark border-1 m-0">
+            <li><a class="dropdown-item" href="#">prijs</a></li>
+            <li><a class="dropdown-item" href="#">levertijd</a></li>
+            <li><a class="dropdown-item" href="#">nieuw</a></li>
+          </ul>
+        </div>
+
+        <div class="m-0 p-0">
+          <button style="letter-spacing: 1px;"
+            class="btn btn-dark btn-lg rounded-0 border border-dark border-1 mb-2 me-2" type="button"
+            id="submit">zoek</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- search results -->
+  <div class="container d-flex pt-4">
+    <div class="m-0 p-0">
+      <div class="fw-light text-start text-uppercase" id="searchTitle"></div>
+    </div>
+    <div id="searchResultsContainer" class="row gx-4"></div>
+  </div>
+
+  <!-- Unity canvas -->
+  <canvas style="height: 1px;" class="invisible" id="modelviewer"></canvas>
+  <div class="position-absolute row m-0 p-0">
+    <div style="height: 1px;" class="bg-dark p-0 m-0" id="progressBar"></div>
+  </div>
+
+  <script>
+    //numberOfSeats
+    var width = document.getElementById('numberOfSeats');
+    var widthInputMin = document.getElementById('numberOfSeatsInputMin');
+    var widthInputMax = document.getElementById('numberOfSeatsInputMax');
+
+    noUiSlider.create(width, {
+      start: [1, 8],
+      /*
+      tooltips: [{
+              to: function(value) {
+                  return parseInt(value);
+              }
+          },
+          {
+              to: function(value) {
+                  return parseInt(value);
+              }
+          }
+      ],
+      */
+      connect: true,
+      range: {
+        'min': 1,
+        'max': 8
+      }
+    });
+
+    numberOfSeats.noUiSlider.on('update', function (values, handle) {
+      numberOfSeatsInputMin.value = parseInt(values[0]);
+      numberOfSeatsInputMax.value = parseInt(values[1]);
+    });
+
+    numberOfSeatsInputMin.addEventListener('change', function () {
+      numberOfSeats.noUiSlider.set([this.value, null]);
+    });
+
+    numberOfSeatsInputMax.addEventListener('change', function () {
+      numberOfSeats.noUiSlider.set([null, this.value]);
+    });
+
+    //width
+    var width = document.getElementById('width');
+    var widthInputMin = document.getElementById('widthInputMin');
+    var widthInputMax = document.getElementById('widthInputMax');
+
+    noUiSlider.create(width, {
+      start: [30, 300],
+      /*
+      tooltips: [{
+              to: function(value) {
+                  return parseInt(value);
+              }
+          },
+          {
+              to: function(value) {
+                  return parseInt(value);
+              }
+          }
+      ],
+      */
+      connect: true,
+      range: {
+        'min': 30,
+        'max': 400
+      }
+    });
+
+    width.noUiSlider.on('update', function (values, handle) {
+      widthInputMin.value = parseInt(values[0]);
+      widthInputMax.value = parseInt(values[1]);
+    });
+
+    widthInputMin.addEventListener('change', function () {
+      width.noUiSlider.set([this.value, null]);
+    });
+
+    widthInputMax.addEventListener('change', function () {
+      width.noUiSlider.set([null, this.value]);
+    });
+
+    //height
+    var height = document.getElementById('height');
+    var heightValues = document.getElementById('heightValues');
+
+    noUiSlider.create(height, {
+      start: [60, 300],
+      /*
+      tooltips: [{
+              to: function(value) {
+                  return parseInt(value);
+              }
+          },
+          {
+              to: function(value) {
+                  return parseInt(value);
+              }
+          }
+      ],
+      */
+      connect: true,
+      range: {
+        'min': 20,
+        'max': 400
+      }
+    });
+
+    var heightInputMin = document.getElementById('heightInputMin');
+    var heightInputMax = document.getElementById('heightInputMax');
+
+    height.noUiSlider.on('update', function (values, handle) {
+      heightInputMin.value = parseInt(values[0]);
+      heightInputMax.value = parseInt(values[1]);
+    });
+
+    heightInputMin.addEventListener('change', function () {
+      height.noUiSlider.set([this.value, null]);
+    });
+
+    heightInputMax.addEventListener('change', function () {
+      height.noUiSlider.set([null, this.value]);
+    });
+  </script>
+
+  <script>
+    async function submitSearchForm() {
+      const form = document.getElementById('requestFurnitiseSearch');
+      const submitButton = document.getElementById('submit');
+      const searchResultsContainer = document.getElementById('searchResultsContainer');
+
+      submitButton.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await updateFormData();
+      });
+
+      async function updateFormData() {
+        const formData = new FormData(form);
+        const furnitiseSearchParam = {};
+
+        furnitiseSearchParam['type'] = document.querySelector('input[name=type]:checked').value;
+        furnitiseSearchParam['width'] = {
+          "min": parseInt(formData.get('widthInputMin')),
+          "max": parseInt(formData.get('widthInputMax'))
+        };
+        furnitiseSearchParam['height'] = {
+          "min": parseInt(formData.get('heightInputMin')),
+          "max": parseInt(formData.get('heightInputMax'))
+        };
+        furnitiseSearchParam['color'] = formData.getAll('color');
+        furnitiseSearchParam['brand'] = formData.getAll('brand');
+
+        const furnitiseSearchParams = JSON.stringify(furnitiseSearchParam);
+
+        const newResultSection = document.createElement('div');
+        newResultSection.classList.add('col-xl-3', 'col-lg-4', 'col-md-6', 'col-sm-12');
+
+        newResultSection.innerHTML = `
+              <img class="productRender img-fluid">
+              <button class="goToConfigurator btn btn-outline-dark float-end rounded-0 h6" type="button">configureer</button>
+              <div class="p-0 m-0 mt-2">
+                  <img class="productInfoBrand" src="" style="height: 20px">
+                  <div class="p-0 m-0">
+                      <p class="productInfoFamily text-uppercase m-0 p-0"></p>
+                      <p class="productInfoPrice float-end"></p>
+                      <p class="productInfoType"></p>
+                      <p class="productInfoName"></p>
+                  </div>
+              </div>`;
+        searchResultsContainer.insertAdjacentElement('afterbegin', newResultSection);
+
+        // pick random product
+        const brands = ['pastoe']; // ['pastoe', 'gelderland'];
+
+        const products = {
+          'pastoe': [],
+          'gelderland': [
+            { name: 'vanDoesburg', title: "10000 van Doesburg" }
+          ]
+        };
+
+        if (furnitiseSearchParam.type == 'closet') {
+          if (furnitiseSearchParam.height.min <= 221 && furnitiseSearchParam.height.max >= 60 && furnitiseSearchParam.width.min <= 194 && furnitiseSearchParam.width.max >= 37) {
+            products['pastoe'].push({ name: 'amsterdammer', title: 'a\'dammer' });
+          }
+
+          if (furnitiseSearchParam.height.min <= 100 && furnitiseSearchParam.height.max >= 60 && furnitiseSearchParam.width.min <= 270 && furnitiseSearchParam.width.max >= 140) {
+            products['pastoe'].push({ name: 'frame', title: 'frame' });
+          }
+          if (furnitiseSearchParam.height.min <= 208 && furnitiseSearchParam.height.max >= 144 && furnitiseSearchParam.width.min <= 133 && furnitiseSearchParam.width.max >= 133) {
+            products['pastoe'].push({ name: 'l-maze', title: 'l-maze' });
+          }
+
+          if (furnitiseSearchParam.height.min <= 208 && furnitiseSearchParam.height.max >= 80 && furnitiseSearchParam.width.min <= 261 && furnitiseSearchParam.width.max >= 101) {
+            products['pastoe'].push({ name: 'l-serie', title: 'l-serie' });
+          }
+          if (furnitiseSearchParam.height.min <= 180 && furnitiseSearchParam.height.max >= && furnitiseSearchParam.width.min <= 135 && furnitiseSearchParam.width.max >= 72) {
+            products['pastoe'].push({ name: 'vision-cabinets', title: 'vision cabinets' });
+          }
+        }
+
+        if (furnitiseSearchParam.type == 'chair') {
+          products['pastoe'].push({ name: 'wire', title: 'wire' });
+        }
+
+        const randomBrandIndex = Math.floor(Math.random() * brands.length);
+        const brand = brands[randomBrandIndex];
+
+        let selectedProduct;
+        let product;
+        let title;
+
+        if (brand in products) {
+          const brandProducts = products[brand];
+          const randomProductIndex = Math.floor(Math.random() * brandProducts.length);
+          selectedProduct = brandProducts[randomProductIndex];
+          product = selectedProduct.name;
+          title = selectedProduct.title;
+        }
+
+        console.log(brand);
+        console.log(product);
+        console.log(title);
+
+        var searchjs = document.createElement('script');
+        searchjs.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/search.js`;
+        document.head.appendChild(searchjs);
+
+        var pricingjs = document.createElement('script');
+        pricingjs.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/pricing.js`;
+        document.head.appendChild(pricingjs);
+
+        async function initConfigurator(brand, product) {
+          var canvas = document.getElementById("modelviewer");
+          var buildUrl = `https://${brand}-${product}.web.app/projects/${brand}-${product}`;
+          var config = {
+            dataUrl: `${buildUrl}/Build/${brand}-${product}.data`,
+            frameworkUrl: `${buildUrl}/Build/${brand}-${product}.framework.js`,
+            codeUrl: `${buildUrl}/Build/${brand}-${product}.wasm`,
+            //streamingAssetsUrl: "StreamingAssets",
+            companyName: 'TripleDesign',
+            productName: product.charAt(0).toUpperCase() + product.slice(1),
+            productVersion: '0.1',
+          };
+
+          const unityPromise = createUnityInstance(canvas, config, (progress) => {
+            progressBar.style.width = 100 * progress + '%';
+          });
+          UNITY_INSTANCE = await unityPromise;
+          const colorsPromise = fetchJsonIfExists(`${buildUrl}/colors.json`);
+          ALLCOLORS = await colorsPromise;
+          console.log(ALLCOLORS);
+          const componentsPromise = fetchJsonIfExists(`${buildUrl}/components.json`);
+          ALLCOMPONENTS = await componentsPromise;
+          console.log(ALLCOMPONENTS);
+          const modelsPromise = fetchJsonIfExists(`${buildUrl}/models.json`);
+          ALLMODELS = await modelsPromise;
+          console.log(ALLMODELS);
+        }
+
+        async function fetchJsonIfExists(url) {
+          try {
+            const response = await fetch(url, { method: 'HEAD' });
+            if (response.ok) {
+              return fetch(url).then(response => response.json());
+            } else {
+              console.log(`JSON file ${url} does not exist. Skipping...`);
+              return null; // Return null or some default value
+            }
+          } catch (error) {
+            console.error('Error:', error.message);
+            return null; // Return null or some default value
+          }
+        }
+
+        console.log(furnitiseSearchParams);
+
+        await initConfigurator(brand, product);
+        await showSearchImages(brand, product, title, JSON.parse(furnitiseSearchParams));
+      }
+    }
+
+    submitSearchForm();
+  </script>
+
+  <script>
+    let furnitureType = document.querySelector('input[name="type"]:checked');
+
+    function updateButtonsVisibility() {
+      const widthButton = document.getElementById('widthButton');
+      const heightButton = document.getElementById('heightButton');
+      const colorGroupButton = document.getElementById('colorGroupButton');
+      const brandButton = document.getElementById('brandButton');
+
+      if (furnitureType.id == 'closet') {
+        widthButton.style.display = 'block';
+        heightButton.style.display = 'block';
+        numberOfSeatsButton.style.display = 'none';
+        colorGroupButton.style.display = 'block';
+        typeButton.style.display = 'block';
+        brandButton.style.display = 'block';
+      } else if (furnitureType.id == 'sofa') {
+        widthButton.style.display = 'block';
+        heightButton.style.display = 'none';
+        numberOfSeatsButton.style.display = 'block';
+        colorGroupButton.style.display = 'block';
+        typeButton.style.display = 'block';
+        brandButton.style.display = 'block';
+      } else if (furnitureType.id == 'chair') {
+        widthButton.style.display = 'none';
+        heightButton.style.display = 'none';
+        numberOfSeatsButton.style.display = 'none';
+        colorGroupButton.style.display = 'block';
+        typeButton.style.display = 'block';
+        brandButton.style.display = 'block';
+      } else if (furnitureType.id == 'table') {
+        widthButton.style.display = 'block';
+        heightButton.style.display = 'block';
+        numberOfSeatsButton.style.display = 'none';
+        colorGroupButton.style.display = 'block';
+        typeButton.style.display = 'block';
+        brandButton.style.display = 'block';
+      }
+    }
+
+    updateButtonsVisibility();
+
+    document.querySelectorAll('input[name="type"]').forEach((radio) => {
+      radio.addEventListener('change', function () {
+        furnitureType = document.querySelector('input[name="type"]:checked');
+        updateButtonsVisibility();
+      });
+    });
+
+    document.querySelectorAll('input[name="type"]').forEach((radio) => {
+      radio.addEventListener('change', function () {
+        furnitureType = document.querySelector('input[name="type"]:checked');
+        updateButtonsVisibility();
+
+        const typeButton = document.getElementById('typeButton').querySelector('.dropdown-toggle');
+        const typeButtonDropdown = document.getElementById('typeButton').querySelector('.dropdown-menu');
+
+        if (furnitureType.id === 'closet') {
+          typeButtonDropdown.innerHTML = '';
+
+          const closetTypes = [{
+            value: 'bookcase',
+            label: 'boekenkast'
+          },
+          {
+            value: 'chestOfDrawers',
+            label: 'ladenkast'
+          },
+          {
+            value: 'displayCabinet',
+            label: 'vitrinekast'
+          },
+          {
+            value: 'tv',
+            label: 'tv meubel'
+          },
+          {
+            value: 'wardrobe',
+            label: 'kledingkast'
+          },
+          {
+            value: 'other',
+            label: 'overige'
+          }
+          ];
+          closetTypes.forEach((closetType) => {
+            const checkbox = document.createElement('input');
+            checkbox.className = 'form-check-input';
+            checkbox.type = 'checkbox';
+            checkbox.name = 'type';
+            checkbox.value = closetType.value;
+            checkbox.id = closetType.value;
+            checkbox.checked = true;
+
+            const label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.htmlFor = closetType.value;
+            label.textContent = closetType.label;
+
+            const formCheck = document.createElement('div');
+            formCheck.className = 'form-check';
+            formCheck.appendChild(checkbox);
+            formCheck.appendChild(label);
+
+            typeButtonDropdown.appendChild(formCheck);
+          });
+          typeButton.textContent = 'type';
+        } else if (furnitureType.id === 'sofa') {
+          typeButtonDropdown.innerHTML = '';
+
+          const sofaTypes = [{
+            value: 'straight',
+            label: 'recht'
+          },
+          {
+            value: 'corner',
+            label: 'hoek'
+          },
+          {
+            value: 'U-shaped',
+            label: 'U vorm'
+          },
+          {
+            value: 'modular',
+            label: 'modulair'
+          }
+          ];
+          sofaTypes.forEach((sofaType) => {
+            const checkbox = document.createElement('input');
+            checkbox.className = 'form-check-input';
+            checkbox.type = 'checkbox';
+            checkbox.name = 'type';
+            checkbox.value = sofaType.value;
+            checkbox.id = sofaType.value;
+            checkbox.checked = true;
+
+            const label = document.createElement('label');
+            label.className = 'form-check-label';
+            label.htmlFor = sofaType.value;
+            label.textContent = sofaType.label;
+
+            const formCheck = document.createElement('div');
+            formCheck.className = 'form-check';
+            formCheck.appendChild(checkbox);
+            formCheck.appendChild(label);
+
+            typeButtonDropdown.appendChild(formCheck);
+          });
+          typeButton.textContent = 'opstelling';
+        }
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- Furnitise code (depending on Bootstrap) -->
+  <script>
+    function furnitiseModal(srcUrl) {
+      document.getElementById("iframe-src").src = 'https://' + srcUrl;
+      var furnitiseModal = new bootstrap.Modal(document.getElementById('furnitise-modal'), {
+        backdrop: false,
+        keyboard: false,
+        focus: true
+      });
+      furnitiseModal.show();
+    }
+  </script>
+
+  <div class="modal fade" id="furnitise-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen p-0 p-md-3 m-0">
+      <div class="modal-content shadow">
+        <div class="modal-body m-0 p-0 overflow-hidden">
+          <script>
+            if (/iPhone|Android/i.test(navigator.userAgent)) {
+              document.write('<div class="position-absolute top-0 start-0">' +
+                '<button type="button" style="color: #000; font-size: 40px;" class="btn btn-link text-decoration-none material-icons m-0 p-0 ms-3 mt-3" data-bs-dismiss="modal" aria-label="Close">chevron_left</button>' +
+                '</div>');
+            } else {
+              document.write('<div class="position-absolute top-0 end-0">' +
+                '<button type="button" style="color: #000; font-size: px;" class="btn btn-link text-decoration-none material-icons m-0 p-0 me-4 mt-4" data-bs-dismiss="modal" aria-label="Close">close</button>' +
+                '</div>');
+            }
+          </script>
+          <iframe id="iframe-src" src="" height="100%" width="100%" title="Pastoe Wire | Furnitise"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- end Furnitise code -->
+  <script src="https://cdn.jsdelivr.net/gh/Tripl3Design/tripletise@latest/tripletiseModal.js"></script>
+</body>
+
+</html>
