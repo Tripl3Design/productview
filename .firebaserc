@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "tripletise-productview"
+  },
+  "targets": {
+    "tripletise-productview": {
+      "hosting": {
+        "tripletise-productview": [
+          "tripletise-productview"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

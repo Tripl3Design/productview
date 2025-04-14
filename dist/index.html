@@ -7,15 +7,13 @@
 
   <link href="https://cdn.jsdelivr.net/gh/Tripl3Design/tripletise@latest/tripletiseModal.css" rel="stylesheet">
 
-  <!-- Furnitise Search -->
   <!-- multirange slider -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js'></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.css">
 
   <title>TripleTise inspiration</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -273,8 +271,8 @@
               <label class="form-check-label" for="all">alles</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" name="brand" value="pastoe" id="pastoe">
-              <label class="form-check-label" for="pastoe">pastoe</label>
+              <input class="form-check-input" type="checkbox" name="brand" value="vanwoerdenwonen" id="vanwoerdenwonen">
+              <label class="form-check-label" for="vanwoerdenwonen">Van Woerden Wonen</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" name="brand" value="merk_2" id="merk_2" disabled>
@@ -464,21 +462,37 @@
 
       async function updateFormData() {
         const formData = new FormData(form);
-        const furnitiseSearchParam = {};
+        const tripletiseSearchParam = {};
 
-        furnitiseSearchParam['type'] = document.querySelector('input[name=type]:checked').value;
-        furnitiseSearchParam['width'] = {
-          "min": parseInt(formData.get('widthInputMin')),
-          "max": parseInt(formData.get('widthInputMax'))
-        };
-        furnitiseSearchParam['height'] = {
-          "min": parseInt(formData.get('heightInputMin')),
-          "max": parseInt(formData.get('heightInputMax'))
-        };
-        furnitiseSearchParam['color'] = formData.getAll('color');
-        furnitiseSearchParam['brand'] = formData.getAll('brand');
+        tripletiseSearchParam['type'] = document.querySelector('input[name=type]:checked').value;
 
-        const furnitiseSearchParams = JSON.stringify(furnitiseSearchParam);
+        if (tripletiseSearchParam.type != 'chair') {
+          tripletiseSearchParam['width'] = {
+            "min": parseInt(formData.get('widthInputMin')),
+            "max": parseInt(formData.get('widthInputMax'))
+          };
+        }
+
+        if (tripletiseSearchParam.type == 'closet') {
+          tripletiseSearchParam['height'] = {
+            "min": parseInt(formData.get('heightInputMin')),
+            "max": parseInt(formData.get('heightInputMax'))
+          };
+        }
+
+        if (tripletiseSearchParam.type == 'sofa') {
+          tripletiseSearchParam['numberOfSeats'] = {
+            "min": parseInt(formData.get('numberOfSeatsInputMin')),
+            "max": parseInt(formData.get('numberOfSeatsInputMax'))
+          };
+        }
+
+        tripletiseSearchParam['color'] = formData.getAll('color');
+
+        tripletiseSearchParam['brand'] = formData.getAll('brand');
+
+
+        const tripletiseSearchParams = JSON.stringify(tripletiseSearchParam);
 
         const newResultSection = document.createElement('div');
         newResultSection.classList.add('col-xl-3', 'col-lg-4', 'col-md-6', 'col-sm-12');
@@ -490,7 +504,7 @@
                   <img class="productInfoBrand" src="" style="height: 20px">
                   <div class="p-0 m-0">
                       <p class="productInfoFamily text-uppercase m-0 p-0"></p>
-                      <p class="productInfoPrice float-end"></p>
+                      <p id="add-to-cart-button" class="productInfoPrice float-end"></p>
                       <p class="productInfoType"></p>
                       <p class="productInfoName"></p>
                   </div>
@@ -498,39 +512,38 @@
         searchResultsContainer.insertAdjacentElement('afterbegin', newResultSection);
 
         // pick random product
-        const brands = ['pastoe']; // ['pastoe', 'gelderland'];
+        const brands = ['vanwoerdenwonen']; // ['pastoe', 'gelderland'];
 
         const products = {
-          'pastoe': [],
-          'gelderland': [
-            { name: 'vanDoesburg', title: "10000 van Doesburg" }
+          'vanwoerdenwonen': [
+            { name: 'levante', title: "evan" }
           ]
         };
-
-        if (furnitiseSearchParam.type == 'closet') {
-          if (furnitiseSearchParam.height.min <= 221 && furnitiseSearchParam.height.max >= 60 && furnitiseSearchParam.width.min <= 194 && furnitiseSearchParam.width.max >= 37) {
-            products['pastoe'].push({ name: 'amsterdammer', title: 'a\'dammer' });
-          }
-
-          if (furnitiseSearchParam.height.min <= 100 && furnitiseSearchParam.height.max >= 60 && furnitiseSearchParam.width.min <= 270 && furnitiseSearchParam.width.max >= 140) {
-            products['pastoe'].push({ name: 'frame', title: 'frame' });
-          }
-          if (furnitiseSearchParam.height.min <= 208 && furnitiseSearchParam.height.max >= 144 && furnitiseSearchParam.width.min <= 133 && furnitiseSearchParam.width.max >= 133) {
-            products['pastoe'].push({ name: 'l-maze', title: 'l-maze' });
-          }
-
-          if (furnitiseSearchParam.height.min <= 208 && furnitiseSearchParam.height.max >= 80 && furnitiseSearchParam.width.min <= 261 && furnitiseSearchParam.width.max >= 101) {
-            products['pastoe'].push({ name: 'l-serie', title: 'l-serie' });
-          }
-          if (furnitiseSearchParam.height.min <= 180 && furnitiseSearchParam.height.max >= && furnitiseSearchParam.width.min <= 135 && furnitiseSearchParam.width.max >= 72) {
-            products['pastoe'].push({ name: 'vision-cabinets', title: 'vision cabinets' });
-          }
-        }
-
-        if (furnitiseSearchParam.type == 'chair') {
+        /*
+                if (tripletiseSearchParam.type == 'closet') {
+                  if (tripletiseSearchParam.height.min <= 221 && tripletiseSearchParam.height.max >= 60 && tripletiseSearchParam.width.min <= 194 && tripletiseSearchParam.width.max >= 37) {
+                    products['pastoe'].push({ name: 'amsterdammer', title: 'a\'dammer' });
+                  }
+        
+                  if (tripletiseSearchParam.height.min <= 100 && tripletiseSearchParam.height.max >= 60 && tripletiseSearchParam.width.min <= 270 && tripletiseSearchParam.width.max >= 140) {
+                    products['pastoe'].push({ name: 'frame', title: 'frame' });
+                  }
+                  if (tripletiseSearchParam.height.min <= 208 && tripletiseSearchParam.height.max >= 144 && tripletiseSearchParam.width.min <= 133 && tripletiseSearchParam.width.max >= 133) {
+                    products['pastoe'].push({ name: 'l-maze', title: 'l-maze' });
+                  }
+        
+                  if (tripletiseSearchParam.height.min <= 208 && tripletiseSearchParam.height.max >= 80 && tripletiseSearchParam.width.min <= 261 && tripletiseSearchParam.width.max >= 101) {
+                    products['pastoe'].push({ name: 'l-serie', title: 'l-serie' });
+                  }
+                  if (tripletiseSearchParam.height.min <= 180 && tripletiseSearchParam.height.max >= && tripletiseSearchParam.width.min <= 135 && tripletiseSearchParam.width.max >= 72) {
+                    products['pastoe'].push({ name: 'vision-cabinets', title: 'vision cabinets' });
+                  }
+                }
+    
+        if (tripletiseSearchParam.type == 'chair') {
           products['pastoe'].push({ name: 'wire', title: 'wire' });
         }
-
+    */
         const randomBrandIndex = Math.floor(Math.random() * brands.length);
         const brand = brands[randomBrandIndex];
 
@@ -553,38 +566,31 @@
         var searchjs = document.createElement('script');
         searchjs.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/search.js`;
         document.head.appendChild(searchjs);
+        /*
+                var pricingjs = document.createElement('script');
+                pricingjs.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/pricing.js`;
+                document.head.appendChild(pricingjs);
+        */
 
-        var pricingjs = document.createElement('script');
-        pricingjs.src = `https://${brand}-${product}.web.app/projects/${brand}-${product}/pricing.js`;
-        document.head.appendChild(pricingjs);
+
+
+
 
         async function initConfigurator(brand, product) {
-          var canvas = document.getElementById("modelviewer");
-          var buildUrl = `https://${brand}-${product}.web.app/projects/${brand}-${product}`;
-          var config = {
-            dataUrl: `${buildUrl}/Build/${brand}-${product}.data`,
-            frameworkUrl: `${buildUrl}/Build/${brand}-${product}.framework.js`,
-            codeUrl: `${buildUrl}/Build/${brand}-${product}.wasm`,
-            //streamingAssetsUrl: "StreamingAssets",
-            companyName: 'TripleDesign',
-            productName: product.charAt(0).toUpperCase() + product.slice(1),
-            productVersion: '0.1',
-          };
+          //console.log(`BRAND: ${brand}, PRODUCT  ${product}, TITLE ${title}`);
 
-          const unityPromise = createUnityInstance(canvas, config, (progress) => {
-            progressBar.style.width = 100 * progress + '%';
-          });
-          UNITY_INSTANCE = await unityPromise;
-          const colorsPromise = fetchJsonIfExists(`${buildUrl}/colors.json`);
+          const colorsPromise = fetch(`https://${brand}-${product}.web.app/projects/${brand}-${product}/colors.json`).then(response => response.json());
           ALLCOLORS = await colorsPromise;
-          console.log(ALLCOLORS);
-          const componentsPromise = fetchJsonIfExists(`${buildUrl}/components.json`);
-          ALLCOMPONENTS = await componentsPromise;
-          console.log(ALLCOMPONENTS);
-          const modelsPromise = fetchJsonIfExists(`${buildUrl}/models.json`);
+          const modelsPromise = fetch(`https://${brand}-${product}.web.app/projects/${brand}-${product}/models.json`).then(response => response.json());
           ALLMODELS = await modelsPromise;
-          console.log(ALLMODELS);
+          const componentsPromise = fetch(`https://${brand}-${product}.web.app/projects/${brand}-${product}/components.json`).then(response => response.json());
+          ALLCOMPONENTS = await componentsPromise;
         }
+
+
+
+
+
 
         async function fetchJsonIfExists(url) {
           try {
@@ -601,10 +607,10 @@
           }
         }
 
-        console.log(furnitiseSearchParams);
+        console.log(tripletiseSearchParams);
 
         await initConfigurator(brand, product);
-        await showSearchImages(brand, product, title, JSON.parse(furnitiseSearchParams));
+        await showSearchImages(JSON.parse(tripletiseSearchParams));
       }
     }
 
@@ -765,46 +771,8 @@
     });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
-  <!-- Furnitise code (depending on Bootstrap) -->
-  <script>
-    function furnitiseModal(srcUrl) {
-      document.getElementById("iframe-src").src = 'https://' + srcUrl;
-      var furnitiseModal = new bootstrap.Modal(document.getElementById('furnitise-modal'), {
-        backdrop: false,
-        keyboard: false,
-        focus: true
-      });
-      furnitiseModal.show();
-    }
-  </script>
-
-  <div class="modal fade" id="furnitise-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen p-0 p-md-3 m-0">
-      <div class="modal-content shadow">
-        <div class="modal-body m-0 p-0 overflow-hidden">
-          <script>
-            if (/iPhone|Android/i.test(navigator.userAgent)) {
-              document.write('<div class="position-absolute top-0 start-0">' +
-                '<button type="button" style="color: #000; font-size: 40px;" class="btn btn-link text-decoration-none material-icons m-0 p-0 ms-3 mt-3" data-bs-dismiss="modal" aria-label="Close">chevron_left</button>' +
-                '</div>');
-            } else {
-              document.write('<div class="position-absolute top-0 end-0">' +
-                '<button type="button" style="color: #000; font-size: px;" class="btn btn-link text-decoration-none material-icons m-0 p-0 me-4 mt-4" data-bs-dismiss="modal" aria-label="Close">close</button>' +
-                '</div>');
-            }
-          </script>
-          <iframe id="iframe-src" src="" height="100%" width="100%" title="Pastoe Wire | Furnitise"></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- end Furnitise code -->
   <script src="https://cdn.jsdelivr.net/gh/Tripl3Design/tripletise@latest/tripletiseModal.js"></script>
 </body>
 
